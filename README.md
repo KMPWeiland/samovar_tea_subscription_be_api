@@ -45,9 +45,10 @@ Feel free to use this starter repo with RSpec and other common gems already conf
 Requirements:
 At a minimum, you must create:
 
-An endpoint to get all tea subscriptions
-An endpoint to get info about one subscription, including the tea(s) involved and what customer(s) is subscribed or has been in the past (if cancelled)
-An endpoint to cancel a specific subscription
+- An endpoint to get all tea subscriptions
+- An endpoint to get info about one subscription, including the tea(s) involved and what customer(s) is subscribed or has been in the past (if cancelled)
+- An endpoint to cancel a specific subscription
+
 Beyond the base requirements, include any additional endpoints you'd like, but be mindful of your time. You don't need to go overboard, consider what might be necessary to achieve MVP so that this API is easy to understand and consume by a Frontend Developer.
 
 If you are looking for a stretch option, you can consume this API for tea product information: Spoontacular API
