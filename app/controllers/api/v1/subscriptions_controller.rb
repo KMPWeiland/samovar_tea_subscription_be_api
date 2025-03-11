@@ -31,6 +31,8 @@ class Api::V1::SubscriptionsController < ApplicationController
   def show
     subscription = Subscription.find(params[:id])
     render json: CustomSubscriptionSerializer.new(subscription).as_json, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Subscription not found" }, status: :not_found
   end
 
   def destroy
