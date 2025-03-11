@@ -8,6 +8,18 @@ class Subscription < ApplicationRecord
 
   has_many :subscription_teas
   has_many :teas, through: :subscription_teas
+
+  def self.sort_by_price
+    self.order(price: :asc)
+  end
+
+  def self.sort_by_status
+    self.order(status: :asc)
+  end
+
+  def self.sort_by_frequency
+    self.order(frequency: :asc)
+  end
 end
 
 
