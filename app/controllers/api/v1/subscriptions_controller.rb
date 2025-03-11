@@ -16,4 +16,10 @@ class Api::V1::SubscriptionsController < ApplicationController
     render json: SubscriptionSerializer.new(subscriptions), status: :ok
   end
 
+  def show
+    subscription = Subscription.find(params[:id])
+    render json = SubscriptionSerializer.new(subscription), status: :ok
+  end
+
 end
+ 
