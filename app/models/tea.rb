@@ -6,7 +6,7 @@ class Tea < ApplicationRecord
   validates :caffeine_free, inclusion: { in: [true, false] }
   validates :origin_country, presence: true
   validates :price, presence: true
-  validates :caffeine_free, inclusion: { in: ['moss', 'smoke', 'floral', 'cedar'] }
+  validates :tasting_note, inclusion: { in: ['moss', 'smoke', 'floral', 'cedar'] }
   validates :stock_quantity, presence: true
 
 

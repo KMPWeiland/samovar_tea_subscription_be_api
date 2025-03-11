@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :subscriptions
-  resources :customers
-  resources :teas
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -12,7 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers, only: [:index]
       resources :teas, only: [:index]
-      resources :subscriptions, only: [:index, :show, :destroy] 
+      resources :subscriptions, only: [:index] 
     end
   end
   # Defines the root path route ("/")
