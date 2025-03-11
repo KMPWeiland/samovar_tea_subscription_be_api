@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers, only: [:index]
       resources :teas, only: [:index]
-      resources :subscriptions, only: [:index, :show, :destroy] do
+      resources :subscriptions, only: [:index, :show, :destroy] 
     end
   end
   # Defines the root path route ("/")
