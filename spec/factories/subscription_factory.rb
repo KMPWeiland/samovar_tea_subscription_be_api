@@ -2,7 +2,8 @@ FactoryBot.define do
   factory :subscription do
     title { Faker::Subscription.plan }
     price { Faker::Commerce.price(range: 14..100.0).to_d }
-    frequency { Faker::Subscription.subscription_term } 
+    frequency { rand(1..20) } 
+    status { ["Active", "Cancelled", "Non-Payment"].sample } 
 
     trait :active do
       status { 'Active' }
