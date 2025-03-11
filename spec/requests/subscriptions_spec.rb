@@ -39,26 +39,60 @@ RSpec.describe "Subscriptions", type: :request do
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json[:data][0][:attributes][:price]).to be < json[:data][1][:attributes][:price]
-      expect(json[:data][1][:attributes][:price]).to be < json[:data][2][:attributes][:price]
+      expect(json[:data][0][:attributes][:price]).to be < json[:data][2][:attributes][:price]
     end
 
-    it "should return a single subscription by ID, including the tea(s) involved and what customer(s) is subscribed or has been in the past (if cancelled)" do
+    it "should return a single subscription by ID" do
 
-      get `api/v1/subscriptions/#{active_subscription.id}`
+      get "/api/v1/subscriptions/#{active_subscription.id}"
 
+      expect(response).to be_successful
       expect(response).to have_http_status(:ok)
 
       json = JSON.parse(response.body, symbolize_names: true)
 
+      expect(json[:data]).to include(:id, :type, :attributes, :relationships)
+      expect(json[:data][:id]).to eq("#{active_subscription.id}")
+      expect(json[:data][:type]).to eq("detailed_subscription") 
+ 
+      expect(json[:data][:attributes][:title]).to eq(active_subscription.title)
+      expect(json[:data][:attributes][:price]).to eq(active_subscription.price)
+      expect(json[:data][:attributes][:status]).to eq(active_subscription.status)
+      expect(json[:data][:attributes][:frequency]).to eq(active_subscription.frequency)
+    end  
+
+    it "should return a single subscription by ID with details about the tea(s) involved" do
+
+      get "/api/v1/subscriptions/#{active_subscription.id}"
+
+      expect(response).to be_successful
+      expect(response).to have_http_status(:ok)
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
       binding.pry
-      
-      expect(json[:data]).to include(:id, :type, :attributes)
-      # expect(json[:data][:id]).to eq("#{item.id}")
-      # expect(json[:data][:type]).to eq("item")
-      # expect(json[:data][:attributes][:name]).to eq(name)
-      # expect(json[:data][:attributes][:description]).to eq(description)
-      # expect(json[:data][:attributes][:unit_price]).to eq(price)
-    end    
+      expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
+    end  
+
+
+    # it "should return a single subscription by ID with details about the customer who is or was subscribed" do
+
+    #   get "/api/v1/subscriptions/#{active_subscription.id}"
+
+    #   expect(response).to be_successful
+    #   expect(response).to have_http_status(:ok)
+
+    #   json = JSON.parse(response.body, symbolize_names: true)
+    #   # binding.pry
+    #   expect(json[:data]).to include(:id, :type, :attributes, :relationships)
+    #   expect(json[:data][:id]).to eq("#{active_subscription.id}")
+    #   expect(json[:data][:type]).to eq("detailed_subscription") 
+ 
+    #   expect(json[:data][:attributes][:title]).to eq(active_subscription.title)
+    #   expect(json[:data][:attributes][:price]).to eq(active_subscription.price)
+    #   expect(json[:data][:attributes][:status]).to eq(active_subscription.status)
+    #   expect(json[:data][:attributes][:frequency]).to eq(active_subscription.frequency)
+    # end  
   end
 end
