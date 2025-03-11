@@ -9,7 +9,7 @@
 #   end
 
 # Customers
-  10.times do
+  customers = 10.times.map do
     Customer.create!(
       first_name: Faker::Name.unique.first_name,
       last_name: Faker::Name.unique.last_name,
@@ -26,7 +26,7 @@
       description: Faker::Fantasy::Tolkien.poem,
       temperature: 178,
       brew_time: 3,
-      caffeine_free: [true, false].sample || false,
+      caffeine_free: [true, false].sample,
       origin_country: Faker::Nation.nationality,
       tasting_note: 'moss',
       price: Faker::Commerce.price(range: 14..100.0).to_d,
@@ -41,7 +41,7 @@
       description: Faker::Fantasy::Tolkien.poem,
       temperature: 212,
       brew_time: 4,
-      caffeine_free: [true, false].sample || false,
+      caffeine_free: [true, false].sample,
       origin_country: Faker::Nation.nationality,
       tasting_note: 'smoke',
       price: Faker::Commerce.price(range: 14..100.0).to_d,
@@ -56,7 +56,7 @@
       description: Faker::Quotes::Shakespeare.unique.as_you_like_it_quote, 
       temperature: 212,
       brew_time: 7,
-      caffeine_free: [true, false].sample || false,
+      caffeine_free: [true, false].sample,
       origin_country: Faker::Nation.nationality,
       tasting_note: 'floral',
       price: Faker::Commerce.price(range: 14..100.0).to_d,
@@ -71,7 +71,7 @@
       description: Faker::Quotes::Shakespeare.unique.as_you_like_it_quote,
       temperature: 195,
       brew_time: 5,
-      caffeine_free: [true, false].sample || false,
+      caffeine_free: [true, false].sample,
       origin_country: Faker::Nation.nationality,
       tasting_note: 'cedar',
       price: Faker::Commerce.price(range: 14..40.0).to_d,
@@ -82,10 +82,11 @@
 # Subscriptions
   10.times do
     Subscription.create!(
+      customer: customers.sample, 
       title: Faker::Subscription.plan,
       price: Faker::Commerce.price(range: 14..100.0).to_d,
       status: ['Active', 'Cancelled', 'Non-Payment'].sample.to_s,
-      frequency: Faker::Subscription.subscription_term
+      frequency: rand(1..20)
     )
   end 
 

@@ -5,5 +5,8 @@ class SubscriptionSerializer
              :title,
              :price,
              :status,
-             :frequency  
+             :frequency,
+             :customer_id
+  
+  belongs_to :customer 
 end
