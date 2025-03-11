@@ -70,9 +70,12 @@ RSpec.describe "Subscriptions", type: :request do
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
-      binding.pry
-      expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
+      #old version: expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
+      # expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
+
+      # binding.pry
+      expect(json[:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
+      expect(json[:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
     end  
 
 
@@ -94,5 +97,23 @@ RSpec.describe "Subscriptions", type: :request do
     #   expect(json[:data][:attributes][:status]).to eq(active_subscription.status)
     #   expect(json[:data][:attributes][:frequency]).to eq(active_subscription.frequency)
     # end  
+
+    it "Should delete a subscription by id" do
+
+      delete "/api/v1/subscriptions/#{active_subscription.id}"
+
+      expect(response).to be_successful
+      expect(response).to have_http_status(:ok)
+
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(json).to have_key(:message) 
+    end
+
+    # it "should return 404 if id is invalid" do
+    #   delete "/api/v1/items/678"
+    #   json = JSON.parse(response.body, symbolize_names: true)
+    #   expect(response).to have_http_status(:not_found)
+    #   expect(json[:errors].first).to eq("Couldn't find Item with 'id'=678")
+    # end
   end
 end
