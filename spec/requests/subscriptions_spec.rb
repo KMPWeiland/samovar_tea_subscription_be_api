@@ -32,7 +32,7 @@ RSpec.describe "Subscriptions", type: :request do
 
     it "should return a list of all subscriptions sorted by price when parameter is present" do
 
-      get "/api/v1/subscriptions?sorted=price"
+      get "/api/v1/subscriptions?sort=price"
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(:ok)
@@ -105,11 +105,12 @@ RSpec.describe "Subscriptions", type: :request do
       expect(json).to have_key(:message) 
     end
 
-    # it "should return 404 if id is invalid" do
-    #   delete "/api/v1/items/678"
-    #   json = JSON.parse(response.body, symbolize_names: true)
-    #   expect(response).to have_http_status(:not_found)
-    #   expect(json[:errors].first).to eq("Couldn't find Item with 'id'=678")
-    # end
+    it "should return 404 if id is invalid" do
+      delete "/api/v1/subscriptions/99999999999"
+
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status(:not_found)
+      expect(json[:error]).to eq("Subscription not found")
+    end
   end
 end

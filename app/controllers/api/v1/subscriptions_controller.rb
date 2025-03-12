@@ -1,23 +1,16 @@
 class Api::V1::SubscriptionsController < ApplicationController
-  # rescue_from StandardError do |e|
-  #   render json: ErrorSerializer.format_errors([e.message]), 
-  #          status: :unprocessable_entity
-  # end
-  # rescue_from ActiveRecord::RecordNotFound do |e|
-  #   render json: ErrorSerializer.format_not_found(e), status: :not_found
-  # end
 
   def index
     subscriptions = Subscription.all
 
-    if params[:sorted].present? && params[:sorted] == "price"
+    if params[:sort].present? && params[:sort] == "price"
       subscriptions = Subscription.sort_by_price
-    elsif 
-      params[:sorted].present? && params[:sorted] == "status"
-      subscriptions = Subscription.sort_by_status
-    elsif 
-      params[:sorted].present? && params[:sorted] == "frequency"
-      subscriptions = Subscription.sort_by_frequency
+    # elsif 
+    #   params[:sort].present? && params[:sort] == "status"
+    #   subscriptions = Subscription.sort_by_status
+    # elsif 
+    #   params[:sort].present? && params[:sort] == "frequency"
+    #   subscriptions = Subscription.sort_by_frequency
     end
 
     render json: SubscriptionSerializer.new(subscriptions), status: :ok
