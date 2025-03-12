@@ -16,17 +16,25 @@ class Api::V1::SubscriptionsController < ApplicationController
     render json: SubscriptionSerializer.new(subscriptions), status: :ok
   end
 
-  # def show
-  #   subscription = Subscription.find(params[:id])
-  #   render json: DetailedSubscriptionSerializer.new(subscription, { include: [:teas, :customer] }), status: :ok
-  # end
-
   def show
     subscription = Subscription.find(params[:id])
     render json: CustomSubscriptionSerializer.new(subscription).as_json, status: :ok
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Subscription not found" }, status: :not_found
   end
+
+  def update
+    subscription = Subscription.find(params[:id])
+    
+    if subscription.update(status: "Cancelled")
+      render json: SubscriptionSerializer.new(subscription), status: :ok
+    else
+      render json: { error: subscription.errors.full_messages.join(", ") }, status: :unprocessable_entity
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Subscription not found" }, status: :not_found
+  end
+
 
   def destroy
     subscription = Subscription.find(params[:id])
