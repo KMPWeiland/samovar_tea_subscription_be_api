@@ -1,28 +1,55 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Samovar API - Backend Service
 
-Things you may want to cover:
+A Ruby on Rails API backend for the Samovar tea subscription service, providing endpoints to manage tea subscriptions.
 
-* Ruby version
+# API Overview
+This Rails API serves as the backend for the Samovar tea subscription admin portal, handling subscription data retrieval, detailed views, and subscription management.
 
-* System dependencies
+# Endpoints
+* Retrieve all subscriptions
+GET/api/v1/subscriptions
+* Retrieve all subscriptions, sorted by price
+GET/api/v1/subscriptions?sort=price
+* Retrieve detailed information for a specific subscription
+GET/api/v1/subscriptions/:id
+* Delete a subscription
+DELETE/api/v1/subscriptions/:id
 
-* Configuration
+# Setup Requirements & Technical Stack
 
-* Database creation
+* Ruby 3.2.2 
+* Rails 7.1.4.1 
+-
+* Ruby on Rails 
+* PostgreSQL database
+* Custom JSON serializers for API responses
+* RSpec for testing
 
-* Database initialization
+# Testing
+The application uses RSpec for testing.  
 
-* How to run the test suite
+Controller Implementation
+The Api::V1::SubscriptionsController handles all subscription-related requests with the following actions:
 
-* Services (job queues, cache servers, search engines, etc.)
+* index: Retrieves all subscriptions, with optional sorting by price
+* show: Retrieves detailed information for a specific subscription, including related teas and customer information
+* destroy: Removes a subscription from the database
 
-* Deployment instructions
+# Models and Associations
+The Subscription model has associations with:
 
-* ...
+Customer (belongs_to)
+Teas (has_many through a join table)
 
+
+
+
+
+
+
+# STARTER REPO DETAILS AND PROJECT SPEC
 
 Things we'll be looking for:
 A strong understanding of Rails, React and best practices
