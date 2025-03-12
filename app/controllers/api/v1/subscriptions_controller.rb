@@ -5,12 +5,12 @@ class Api::V1::SubscriptionsController < ApplicationController
 
     if params[:sort].present? && params[:sort] == "price"
       subscriptions = Subscription.sort_by_price
-    elsif 
-      params[:sort].present? && params[:sort] == "status"
-      subscriptions = Subscription.sort_by_status
-    elsif 
-      params[:sort].present? && params[:sort] == "frequency"
-      subscriptions = Subscription.sort_by_frequency
+    # elsif 
+    #   params[:sort].present? && params[:sort] == "status"
+    #   subscriptions = Subscription.sort_by_status
+    # elsif 
+    #   params[:sort].present? && params[:sort] == "frequency"
+    #   subscriptions = Subscription.sort_by_frequency
     end
 
     render json: SubscriptionSerializer.new(subscriptions), status: :ok
