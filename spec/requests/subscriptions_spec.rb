@@ -8,14 +8,6 @@ RSpec.describe "Subscriptions", type: :request do
   let!(:cancelled_subscription) { create(:subscription, :cancelled, customer: customer, teas: teas) }
   let!(:non_payment_subscription) { create(:subscription, :non_payment, customer: customer, teas: teas) }
 
-  # before(:each) do
-  #   Subscription.destroy_all
-
-  #   active_subscription
-  #   cancelled_subscription
-  #   non_payment_subscription
-  # end
-
   describe "Happy Paths" do
     it "can retrieve a list of all subscriptions" do
       # GET /index
@@ -69,9 +61,6 @@ RSpec.describe "Subscriptions", type: :request do
       expect(response).to have_http_status(:ok)
 
       json = JSON.parse(response.body, symbolize_names: true)
-
-      #old version: expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
-      # expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
 
       expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
       expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
