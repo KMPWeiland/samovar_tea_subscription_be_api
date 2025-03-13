@@ -62,9 +62,6 @@ RSpec.describe "Subscriptions", type: :request do
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      #old version: expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
-      # expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
-
       expect(json[:data][:relationships][:teas][:data][0][:id].to_i).to eq(active_subscription.teas.first.id)
       expect(json[:data][:relationships][:teas][:data][0][:tea_type]).to eq(active_subscription.teas.first.tea_type)
       expect(json[:data][:relationships][:teas][:data][0][:name]).to eq(active_subscription.teas.first.name)
